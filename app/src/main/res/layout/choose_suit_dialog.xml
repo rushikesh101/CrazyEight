@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chooseSuitLayout"
+    android:layout_width="275dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="top">
+<TextView
+    android:id="@+id/chooseSuitText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Choose a suit."
+    android:textSize="16sp"
+    android:layout_marginStart="5dp"
+    android:textColor="#000000"
+    />
+
+    <Spinner
+        android:id="@+id/suitSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:drawSelectorOnTop="true"
+        android:visibility="visible" />
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="OK"/>
+</LinearLayout>
