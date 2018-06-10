@@ -1,5 +1,6 @@
 package com.techblogopedia.crazyeight;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,8 +26,8 @@ public class GameView extends View {
 
     private Context myContext;
     private List<Card> deck = new ArrayList<Card>();
-    private List<Card> myHand = new ArrayList<Card>();
-    private List<Card> oppHand = new ArrayList<Card>();
+    private List<Card> myHand = new ArrayList<>();
+    private List<Card> oppHand = new ArrayList<>();
     private List<Card> discardPile = new ArrayList<Card>();
     private int scaledCardW;
     private int scaledCardH;
@@ -76,7 +77,7 @@ public class GameView extends View {
         screenW = w;
         screenH = h;
         Bitmap tempBitmap = BitmapFactory.decodeResource(myContext.getResources(),R.drawable.card_back);
-        scaledCardW = (int) (screenW/8);
+        scaledCardW = screenW/8;
         scaledCardH = (int) (scaledCardW*1.28);
         cardBack = Bitmap.createScaledBitmap(tempBitmap,scaledCardW,scaledCardH,false);
         nextCardButton = BitmapFactory.decodeResource(getResources(),R.drawable.arrow_next);
@@ -150,13 +151,14 @@ public class GameView extends View {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int eventaction = event.getAction();
+        int eventAction = event.getAction();
         int X = (int)event.getX();
         int Y = (int)event.getY();
 
-        switch (eventaction){
+        switch (eventAction){
             case MotionEvent.ACTION_DOWN:
                 if(myTurn){
                     for (int i = 0; i < 7;i++){
@@ -246,13 +248,13 @@ public class GameView extends View {
         final Dialog chooseSuitDialog =  new Dialog(myContext);
         chooseSuitDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         chooseSuitDialog.setContentView(R.layout.choose_suit_dialog);
-        final Spinner suitSpinner = (Spinner)chooseSuitDialog.findViewById(R.id.suitSpinner);
+        final Spinner suitSpinner = chooseSuitDialog.findViewById(R.id.suitSpinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(myContext,R.array.suits,android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         suitSpinner.setAdapter(adapter);
 
-        Button okButton = (Button)chooseSuitDialog.findViewById(R.id.okButton);
+        Button okButton = chooseSuitDialog.findViewById(R.id.okButton);
         okButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -348,7 +350,7 @@ public class GameView extends View {
         endHandDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         endHandDialog.setContentView(R.layout.end_hand_dialog);
         updateScores();
-        TextView endHandText = (TextView)endHandDialog.findViewById(R.id.endHandText);
+        TextView endHandText = endHandDialog.findViewById(R.id.endHandText);
         if(myHand.isEmpty()){
             if(myScore >= 300){
                 endHandText.setText("You reached " +myScore + "points. You won! Would you like to play again?");
@@ -362,7 +364,7 @@ public class GameView extends View {
                 endHandText.setText("The computer went out and got " + scoreThisHand + " points.");
             }
         }
-        Button nextHandButton = (Button)endHandDialog.findViewById(R.id.nextHandButton);
+        Button nextHandButton = endHandDialog.findViewById(R.id.nextHandButton);
         if(oppScore >= 300 || myScore >= 300){
             nextHandButton.setText("New Game.");
         }
